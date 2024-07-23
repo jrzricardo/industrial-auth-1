@@ -7,25 +7,26 @@ class PhotoPolicy < ApplicationPolicy
       @photo = photo
     end
 
-    def index?
-      false
-    end
 
     def show?
       user == photo.owner ||
       !photo.owner.private? ||
       photo.owner.followers.include?(user)
     end
-
-    def new?
+    
+    def create?
       true
     end
-
+    
+    def destroy?
+      user == photo.owner
+    end
+    
     def edit?
       user == photo.owner
     end
-
-    def create?
+    
+    def new?
       true
     end
 
@@ -33,8 +34,5 @@ class PhotoPolicy < ApplicationPolicy
       user == photo.owner
     end
 
-    def destroy?
-      user == photo.owner
-    end
 
 end
